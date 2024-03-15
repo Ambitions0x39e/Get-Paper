@@ -1,7 +1,7 @@
 import os
 from src.info import subjects
 from src.write_pdf import download_pdf
-from test import init_tk
+from tk_init import init_tk
 # Example Link: https://cie.fraft.cn/obj/Fetch/redir/9709_m20_ms_22.pdf
 
 def download_path(): # /Users/username/Downloads
