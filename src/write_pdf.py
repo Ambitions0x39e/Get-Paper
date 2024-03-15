@@ -11,7 +11,7 @@ def create_subfolder(filename): # Example: 9709_m20_qp_12
         case 's': season = 'May'
         case 'm': season = 'Feb'
     folder_name = f'{year}\ {season}\ {paper_num}'
-    os.system(f'mkdir ~/Downloads/Past_Papers/{folder_name}')
+    os.system(f'mkdir ~/Downloads/Past_Papers/{folder_name} >/dev/null 2>&1')
     return folder_name
 
 def download_pdf(url, filename):
@@ -22,7 +22,7 @@ def download_pdf(url, filename):
             fd.write(chunk)
 
     folder = create_subfolder(filename)
-    os.system(f"mv {filename}.pdf ~/Downloads/Past_Papers/{folder}")
+    os.system(f"mv {filename}.pdf ~/Downloads/Past_Papers/{folder} >/dev/null 2>&1")
     
     
 if __name__ == '__main__':
