@@ -3,3 +3,5 @@ test.py
 help.md
 src/__pycache__
 web
+.vscode
+__pycache__
