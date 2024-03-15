@@ -23,8 +23,3 @@ def download_pdf(url, filename):
 
     folder = create_subfolder(filename)
     os.system(f"mv {filename}.pdf ~/Downloads/Past_Papers/{folder} >/dev/null 2>&1")
-    
-    
-if __name__ == '__main__':
-    filename = '9709_m20_qp_12'
-    create_subfolder(filename)
