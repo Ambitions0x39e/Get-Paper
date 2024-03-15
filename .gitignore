@@ -1,6 +1,5 @@
 test.py
 .DS_Store
-help.md
 src/__pycache__
 web
 .vscode
