@@ -14,7 +14,7 @@ def create_subfolder(filename): # Example: 9709_m20_qp_12
     
     folder_name = f'{year}\ {season}\ {paper_num}'
     # /dev/null 2>&1
-    os.system(f'mkdir ~/Downloads/Past_Papers/folder_name >/dev/null 2>&1')
+    os.system(f'mkdir ~/Downloads/Past_Papers/{folder_name} >/dev/null 2>&1')
     return folder_name
 
 def download_pdf(url, filename):
