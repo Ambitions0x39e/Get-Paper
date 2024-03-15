@@ -1,7 +1,7 @@
 import os
 from src.info import subjects
 from src.write_pdf import download_pdf
-from test import init_tk
+from init_tk import init_tk, write_info
 # Example Link: https://cie.fraft.cn/obj/Fetch/redir/9709_m20_ms_22.pdf
 
 def download_path(): # /Users/username/Downloads
@@ -30,3 +30,4 @@ print(f'Paper of {subjects[code]}, Number {paper_code}')
 
 download_pdf(src_qp, qp_name)
 download_pdf(src_ms, ms_name)
+
