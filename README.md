@@ -14,6 +14,4 @@ The meaning of each code is [here](help.md)
 ### Screenshots:
 <img src="assets/Main Window.png"></img>
 
-
----
-### Notifications:
+### 
