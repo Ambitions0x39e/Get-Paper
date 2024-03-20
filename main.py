@@ -1,14 +1,15 @@
 import os
 from src.info import subjects
 from src.write_pdf import download_pdf
-from init_tk import init_tk, write_info
+# from init_tk import init_tk, write_info
 # Example Link: https://cie.fraft.cn/obj/Fetch/redir/9709_m20_ms_22.pdf
 
 def download_path(): # /Users/username/Downloads
     return '/Users/'+os.environ.get('USER')+'/Downloads'
 
 print('Subject Year Seasons Paper (QP/MS)')
-code, year, time, paper_code = init_tk()
+code, year, time, paper_code = init_tk() # In future Tkinker will be disabled
+# code, year, time, paper_code = input().split() 
 
 
 if len(year) == 2: year = '20'+year
