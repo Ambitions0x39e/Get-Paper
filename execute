@@ -1,0 +1,2 @@
+#!/bin/zsh
+pypy3 main.py
