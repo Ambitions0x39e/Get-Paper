@@ -3,4 +3,5 @@ test.py
 src/__pycache__
 web
 .vscode
+.idea
 __pycache__
