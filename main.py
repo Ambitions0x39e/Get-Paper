@@ -2,7 +2,6 @@ import sys, os, time
 from PySide6 import QtCore, QtWidgets
 from src.info import subjects
 from src.write_pdf import download_pdf
-import objc
 from Cocoa import NSObject
 from AppKit import NSUserNotificationCenter, NSUserNotification
 # Example Link: https://cie.fraft.cn/obj/Fetch/redir/9709_m20_ms_22.pdf
@@ -61,15 +60,6 @@ def main(Paper_Code, Year, Season, Paper_Number, Qp_Ms):
     
     return 'Success'
     
-def send_notification(title, subtitle, message):
-    notification = NSUserNotification.alloc().init()
-    notification.setTitle_(title)
-    notification.setSubtitle_(subtitle)
-    notification.setInformativeText_(message)
-
-    center = NSUserNotificationCenter.defaultUserNotificationCenter()
-    center.deliverNotification_(notification)
-
 class MyWidget(QtWidgets.QWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
