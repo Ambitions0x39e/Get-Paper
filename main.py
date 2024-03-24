@@ -1,27 +1,12 @@
-import sys, os, time
+import sys
 from PySide6 import QtCore, QtWidgets
 from src.info import subjects
 from src.write_pdf import download_pdf
 from Cocoa import NSObject
 from AppKit import NSUserNotificationCenter, NSUserNotification
+from src.notifications import NotificationDelegate, send_notification
 # Example Link: https://cie.fraft.cn/obj/Fetch/redir/9709_m20_ms_22.pdf
-class NotificationDelegate(NSObject):
-    def userNotificationCenter_didActivateNotification_(self, center, notification):
-        # Handle notification activation
-        pass
-    
-def send_notification(title, subtitle, message):
-    delegate = NotificationDelegate.alloc().init()
-    center = NSUserNotificationCenter.defaultUserNotificationCenter()
-    center.setDelegate_(delegate)
 
-    notification = NSUserNotification.alloc().init()
-    notification.setTitle_(title)
-    notification.setSubtitle_(subtitle)
-    notification.setInformativeText_(message)
-
-    center.deliverNotification_(notification)
-    
 def main(Paper_Code, Year, Season, Paper_Number, Qp_Ms):
     # FULL year if user only inputs the last two digits of the year number
     if len(Paper_Code) != 4: return "Wrong Paper Code"
@@ -42,7 +27,6 @@ def main(Paper_Code, Year, Season, Paper_Number, Qp_Ms):
         try: 
             download_pdf(src_qp, qp_name)
             download_pdf(src_ms, ms_name)
-            print(1)
         except ConnectionResetError:
             return "Wrong Network! Please check your network / proxies"
     elif Qp_Ms.lower() == 'qp':
@@ -83,7 +67,7 @@ class MyWidget(QtWidgets.QWidget):
         self.line_edit_5 = QtWidgets.QLineEdit()
 
         self.button = QtWidgets.QPushButton("↓ Download Paper ↓")
-        self.exitbutton = QtWidgets.QPushButton("Quit App")
+        self.exit_button = QtWidgets.QPushButton("Quit App")
         
 
         form_layout = QtWidgets.QFormLayout()
@@ -96,7 +80,7 @@ class MyWidget(QtWidgets.QWidget):
         main_layout = QtWidgets.QVBoxLayout()
         main_layout.addLayout(form_layout)
         main_layout.addWidget(self.button)
-        main_layout.addWidget(self.exitbutton)
+        main_layout.addWidget(self.exit_button)
 
         self.setLayout(main_layout)
 
@@ -118,11 +102,12 @@ class MyWidget(QtWidgets.QWidget):
             
             result = main(paper_code, year, season, paper_number, qp_ms)
             
-            send_notification('Get Paper', '', result)
+            print(result)
+            # send_notification('Get Paper', '', result)
             # 在状态标签中显示获取论文的状态信息
 
         self.button.clicked.connect(Get_Paper)
-        self.exitbutton.clicked.connect(exit)
+        self.exit_button.clicked.connect(exit)
 
 
 if __name__ == "__main__":
