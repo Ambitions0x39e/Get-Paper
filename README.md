@@ -12,8 +12,7 @@ The meaning of each code is [here](help.md)
 
 ---
 ## Dependencies 
-For this app, `python3` is needed for executing. 
-We suggest `python3.11` for usage.
+For this app, `python3` is needed for executing. We suggest newer python version. 
 Although it needs extra packages, you **DO NOT NEED** to install it manually.   
 
 ---
