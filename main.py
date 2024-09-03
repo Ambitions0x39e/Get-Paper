@@ -1,9 +1,6 @@
 import sys, os, time
 from src.info import subjects
-<<<<<<< Updated upstream
-=======
 from src.batch_download import batch_read
->>>>>>> Stashed changes
 from PySide6 import QtCore, QtWidgets
 from src.central import paper_download
 
@@ -11,11 +8,7 @@ from src.central import paper_download
 '''
 TODO: 
     - Try to predict if a .pdf file is 441bytes (incorrect file existence)
-<<<<<<< Updated upstream
-    - PyInstaller -> release of app
-=======
     - Now *DISABLED* subfolder. 
->>>>>>> Stashed changes
 FIXME:
 
 '''
@@ -46,18 +39,11 @@ class MyWidget(QtWidgets.QWidget):
         self.paperNumberInput = QtWidgets.QLineEdit()
         self.qpmsInput = QtWidgets.QLineEdit()
 
-<<<<<<< Updated upstream
-        self.button = QtWidgets.QPushButton("↓ Download Paper ↓")
-        self.exit_button = QtWidgets.QPushButton("Quit App")
-        self.clear_button = QtWidgets.QPushButton("Clear all Papers")
-        self.open_button = QtWidgets.QPushButton("Open Folder")
-=======
         self.button = QtWidgets.QPushButton("Download Paper")
         self.exit_button = QtWidgets.QPushButton("Quit App")
         self.clear_button = QtWidgets.QPushButton("Clear all Papers")
         self.open_button = QtWidgets.QPushButton("Open Folder")
         # self.batch_download = QtWidgets.QPushButton("Batch Download")
->>>>>>> Stashed changes
         
 
         form_layout = QtWidgets.QFormLayout()
@@ -78,10 +64,7 @@ class MyWidget(QtWidgets.QWidget):
         main_layout.addWidget(self.empty_line)
         main_layout.addWidget(self.button)
         main_layout.addLayout(btn_layout) # clear and open
-<<<<<<< Updated upstream
-=======
         # main_layout.addWidget(self.batch_download)
->>>>>>> Stashed changes
         main_layout.addWidget(self.exit_button)
 
         self.setLayout(main_layout)
@@ -120,22 +103,16 @@ class MyWidget(QtWidgets.QWidget):
         
         def open_folder():
             os.system('open ~/Downloads/Past_Papers')
-<<<<<<< Updated upstream
-=======
         
         def batch_download_select():
             file_name, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select File")
 
->>>>>>> Stashed changes
 
         self.button.clicked.connect(Get_Paper)
         self.exit_button.clicked.connect(exit)
         self.clear_button.clicked.connect(clear_cache)
         self.open_button.clicked.connect(open_folder)
-<<<<<<< Updated upstream
-=======
         # self.batch_download.clicked.connect(batch_download_select)
->>>>>>> Stashed changes
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
