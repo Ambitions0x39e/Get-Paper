@@ -5,3 +5,10 @@ web
 .vscode
 .idea
 __pycache__
+TODOs
+TODOs/basetype.py
+TODOs/batch_download.py
+TODOs/maingui.py
+TODOs/sep_file.py
+TODOs/test.txt
+message_text.py

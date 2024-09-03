@@ -36,3 +36,22 @@ subjects={
     '9715': "Chinese First Language (AS-A2)",
     '9990': "Psychology (AS-A2)"
 }
+
+paper_objs: list[str] = ['ms', 
+                         'qp', 
+                         'ir', 
+                         'er', 
+                         'gt', 
+                         'ci', 
+                         'ab', 
+                         'in', 
+                         'tn', 
+                         'rp', 
+                         'ts', 
+                         'qr', 
+                         'pm', 
+                         'sp', 
+                         'sy', 
+                         'sf', 
+                         'su']
+

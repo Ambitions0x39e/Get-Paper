@@ -1,2 +1,0 @@
-#!/bin/zsh
-find ~/Downloads/Past_Papers -mindepth 1 -delete >/dev/null 2>&1

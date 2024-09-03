@@ -1,57 +1,18 @@
 import sys, os, time
-from PySide6 import QtCore, QtWidgets
 from src.info import subjects
-from src.write_pdf import download_pdf
-from Foundation import NSUserNotification
-from Foundation import NSUserNotificationCenter
+from src.batch_download import batch_read
+from PySide6 import QtCore, QtWidgets
+from src.central import paper_download
+
 # Example Link: https://cie.fraft.cn/obj/Fetch/redir/9709_m20_ms_22.pdf
+'''
+TODO: 
+    - Try to predict if a .pdf file is 441bytes (incorrect file existence)
+    - Now *DISABLED* subfolder. 
+FIXME:
 
-def main(Paper_Code, Year, Season, Paper_Number, Qp_Ms):
-    # FULL year if user only inputs the last two digits of the year number
-    if len(Paper_Code) != 4: return "Wrong Paper Code"
-    if len(Year) == 2: Year = '20' + Year
-    seasons = ''
-    seasons = 'm' if Season.lower() in ['march', 'mar', 'feb', 'february', 'spring'] \
-        else 's' if Season.lower() in ['may', 'june', 'jun', 'summer'] \
-        else 'w' if Season.lower() in ['oct', 'october', 'nov', 'november', 'winter'] \
-        else ''
-    if seasons == '':
-        return 'Wrong Seasons'
-    qp_name = f'{Paper_Code}_{seasons}{Year[2:]}_qp_{Paper_Number}'
-    ms_name = f'{Paper_Code}_{seasons}{Year[2:]}_ms_{Paper_Number}'
-    src_qp= 'https://cie.fraft.cn/obj/Fetch/redir/'+f'{qp_name}.pdf'
-    src_ms= 'https://cie.fraft.cn/obj/Fetch/redir/'+f'{ms_name}.pdf'
-    
-    if Qp_Ms == '':
-        try: 
-            download_pdf(src_qp, qp_name)
-            download_pdf(src_ms, ms_name)
-            print(1)
-        except ConnectionResetError:
-            return "Wrong Network! Please check your network / proxies"
-    elif Qp_Ms.lower() == 'qp':
-        try:
-            download_pdf(src_qp, qp_name)
-        except ConnectionResetError:
-            return "Wrong Network! Please check your network / proxies"
-    elif Qp_Ms.lower() == 'ms': 
-        try:
-            download_pdf(src_ms, ms_name)
-        except ConnectionResetError:
-            return "Wrong Network! Please check your network / proxies"
-    else:
-        return "Wrong QP / MS input!"
-    
-    return 'Success'
-    
-def send_notification(title, subtitle, message):
-    notification = NSUserNotification.alloc().init()
-    notification.setTitle_(title)
-    notification.setSubtitle_(subtitle)
-    notification.setInformativeText_(message)
+'''
 
-    center = NSUserNotificationCenter.defaultUserNotificationCenter()
-    center.deliverNotification_(notification)
 
 class MyWidget(QtWidgets.QWidget):
     def __init__(self, *args, **kwargs):
@@ -63,62 +24,97 @@ class MyWidget(QtWidgets.QWidget):
 
     def setup_ui(self) -> None:
 
+        listLabel = []
         label_1 = QtWidgets.QLabel("Paper Code")
         label_2 = QtWidgets.QLabel("Year ")
         label_3 = QtWidgets.QLabel("Seasons")
         label_4 = QtWidgets.QLabel("Paper Number")
         label_5 = QtWidgets.QLabel("QP / MS")
+        self.empty_line = QtWidgets.QLabel(" ")
+        self.status_text = QtWidgets.QLabel(" ", alignment=QtCore.Qt.AlignHCenter)
 
-        self.line_edit_1 = QtWidgets.QLineEdit()
-        self.line_edit_2 = QtWidgets.QLineEdit()
-        self.line_edit_3 = QtWidgets.QLineEdit()
-        self.line_edit_4 = QtWidgets.QLineEdit()
-        self.line_edit_5 = QtWidgets.QLineEdit()
+        self.paperCodeInput = QtWidgets.QLineEdit()
+        self.yearInput = QtWidgets.QLineEdit()
+        self.seasonsInput = QtWidgets.QLineEdit()
+        self.paperNumberInput = QtWidgets.QLineEdit()
+        self.qpmsInput = QtWidgets.QLineEdit()
 
-        self.button = QtWidgets.QPushButton("↓ Download Paper ↓")
-        self.exitbutton = QtWidgets.QPushButton("Quit App")
+        self.button = QtWidgets.QPushButton("Download Paper")
+        self.exit_button = QtWidgets.QPushButton("Quit App")
+        self.clear_button = QtWidgets.QPushButton("Clear all Papers")
+        self.open_button = QtWidgets.QPushButton("Open Folder")
+        # self.batch_download = QtWidgets.QPushButton("Batch Download")
         
 
         form_layout = QtWidgets.QFormLayout()
-        form_layout.addRow(label_1, self.line_edit_1)
-        form_layout.addRow(label_2, self.line_edit_2)
-        form_layout.addRow(label_3, self.line_edit_3)
-        form_layout.addRow(label_4, self.line_edit_4)
-        form_layout.addRow(label_5, self.line_edit_5)
+        form_layout.addRow(label_1, self.paperCodeInput)
+        form_layout.addRow(label_2, self.yearInput)
+        form_layout.addRow(label_3, self.seasonsInput)
+        form_layout.addRow(label_4, self.paperNumberInput)
+        form_layout.addRow(label_5, self.qpmsInput)
+        
+        btn_layout = QtWidgets.QHBoxLayout()
+        btn_layout.addWidget(self.clear_button)
+        btn_layout.addWidget(self.open_button)
 
         main_layout = QtWidgets.QVBoxLayout()
         main_layout.addLayout(form_layout)
+        main_layout.addWidget(self.empty_line)
+        main_layout.addWidget(self.status_text)
+        main_layout.addWidget(self.empty_line)
         main_layout.addWidget(self.button)
-        main_layout.addWidget(self.exitbutton)
+        main_layout.addLayout(btn_layout) # clear and open
+        # main_layout.addWidget(self.batch_download)
+        main_layout.addWidget(self.exit_button)
 
         self.setLayout(main_layout)
 
     def wait_echo(self) -> None:
-        self.line_edit_1.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-        self.line_edit_2.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-        self.line_edit_3.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-        self.line_edit_4.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
-        self.line_edit_5.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+        self.paperCodeInput.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+        self.yearInput.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+        self.seasonsInput.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+        self.paperNumberInput.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
+        self.qpmsInput.setEchoMode(QtWidgets.QLineEdit.EchoMode.Normal)
 
         @QtCore.Slot()
         def Get_Paper():
             # 获取用户输入的信息
-            paper_code = self.line_edit_1.text()
-            year = self.line_edit_2.text()
-            season = self.line_edit_3.text()
-            paper_number = self.line_edit_4.text()
-            qp_ms = self.line_edit_5.text()
+            paper_code = self.paperCodeInput.text()
+            year = self.yearInput.text()
+            season = self.seasonsInput.text()
+            paper_number = self.paperNumberInput.text()
+            qp_ms = self.qpmsInput.text()
             
-            result = main(paper_code, year, season, paper_number, qp_ms)
+            result , paper_name = paper_download(paper_code, year, season, paper_number, qp_ms)
             
-            send_notification('Get Paper', '', result)
+            
+            # Suppose the Py version is default python from Apple. 
+            # send_notifications('Get Paper', '', result)
+            if result == 'Success':
+                self.status_text.setText(f'{result}: {paper_name}')
+            else:
+                self.status_text.setText(f'{result}')
+            
+            
             # 在状态标签中显示获取论文的状态信息
+        def clear_cache():
+            os.system("find ~/Downloads/Past_Papers -mindepth 1 -delete >/dev/null 2>&1")
+            self.status_text.setText("All Papers cleared!")
+        
+        def open_folder():
+            os.system('open ~/Downloads/Past_Papers')
+        
+        def batch_download_select():
+            file_name, _ = QtWidgets.QFileDialog.getOpenFileName(None, "Select File")
+
 
         self.button.clicked.connect(Get_Paper)
-        self.exitbutton.clicked.connect(exit)
+        self.exit_button.clicked.connect(exit)
+        self.clear_button.clicked.connect(clear_cache)
+        self.open_button.clicked.connect(open_folder)
+        # self.batch_download.clicked.connect(batch_download_select)
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     window = MyWidget()
     window.show()

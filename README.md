@@ -12,10 +12,10 @@ The meaning of each code is [here](help.md)
 
 ---
 ## Dependencies 
-For this app, `python3` is needed for executing. 
-We suggest `python3.11` for usage.
+For this app, `python3` is needed for executing. We suggest newer python version. 
 Although it needs extra packages, you **DO NOT NEED** to install it manually.   
+For this application, we use `py2app` to build release file, so we suggests you compile it manually with following this [Instructions](instructions.md)
 
 ---
 > By: Ambitions0x39e
-> Last Update: 2024/03/22
+> Last Update: 2024/04/09

@@ -2,7 +2,7 @@
 
 echo "Checking Python Dependencies..."
 # Try to find pypy3 and python3
-DEFAULT_PYTHON =""
+DEFAULT_PYTHON = ""
 if command -v python3 &>/dev/null; then
     DEFAULT_PYTHON="python3"
 else
