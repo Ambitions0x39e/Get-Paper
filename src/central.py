@@ -12,8 +12,13 @@ def paper_download(Paper_Code, Year, Season, Paper_Number, Qp_Ms):
         return 'Wrong Seasons', 'NA'
     qp_name = f'{Paper_Code}_{seasons}{Year[2:]}_qp_{Paper_Number}'
     ms_name = f'{Paper_Code}_{seasons}{Year[2:]}_ms_{Paper_Number}'
+<<<<<<< Updated upstream
     src_qp= 'https://cie.fraft.cn/obj/Fetch/redir/'+f'{qp_name}.pdf'
     src_ms= 'https://cie.fraft.cn/obj/Fetch/redir/'+f'{ms_name}.pdf'
+=======
+    src_qp= 'https://cie.fraft.cn/obj/Common/Fetch/redir/'+f'{qp_name}.pdf'
+    src_ms= 'https://cie.fraft.cn/obj/Common/Fetch/redir/'+f'{ms_name}.pdf'
+>>>>>>> Stashed changes
     
     if Qp_Ms == '':
         try: 

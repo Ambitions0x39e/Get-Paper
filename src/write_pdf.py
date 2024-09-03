@@ -24,6 +24,7 @@ def download_pdf(url, filename):
         for chunk in r.iter_content(1024):
             fd.write(chunk)
 
-    folder = create_subfolder(filename)
-    os.system(f"mv {filename}.pdf ~/Downloads/Past_Papers/{folder} >/dev/null 2>&1")
+    # folder = create_subfolder(filename)
+    os.system(f"mv {filename}.pdf ~/Downloads/Past_Papers/ >/dev/null 2>&1")
+    # os.system(f"mv {filename}.pdf ~/Downloads/Past_Papers/{folder} >/dev/null 2>&1")
     

@@ -1,4 +1,9 @@
 PySide6
+<<<<<<< Updated upstream
 pyobjc
 macos-notifications
 pathlib
+=======
+pathlib
+py2app
+>>>>>>> Stashed changes
