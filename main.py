@@ -26,7 +26,7 @@ class MyWidget(QtWidgets.QWidget):
 
         listLabel = []
         label_1 = QtWidgets.QLabel("Paper Code")
-        label_2 = QtWidgets.QLabel("Year ")
+        label_2 = QtWidgets.QLabel("Year")
         label_3 = QtWidgets.QLabel("Seasons")
         label_4 = QtWidgets.QLabel("Paper Number")
         label_5 = QtWidgets.QLabel("QP / MS")

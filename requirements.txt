@@ -1,3 +1,2 @@
 PySide6
-pathlib
 py2app
